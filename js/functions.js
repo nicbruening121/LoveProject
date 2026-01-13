@@ -60,8 +60,8 @@ function getHeartPoint(angle, offsetX, offsetY) {
 
 // ==================== HEART BLOOM ANIMATION ====================
 function startHeartAnimation(offsetX, offsetY) {
-    var interval = 50;
-    var angle = 10;
+    var interval = 100;
+    var angle = 0.15;
     var heart = [];
     var animationTimer = setInterval(function () {
         var bloom = getHeartPoint(angle, offsetX, offsetY);
