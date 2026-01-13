@@ -34,6 +34,7 @@ body {
     font-size: 18px;
     margin-top: 10px;
     margin-bottom: 10px;
+    color: #ffffff; /* right-side timer text white */
 }
 
 #elapseClock .digit {
@@ -47,13 +48,14 @@ body {
     font-family: "sans-serif";
     width: 500px;
     font-size: 24px;
-    color: #666;
+    color: #ffffff; /* typewriter left-side text white */
 }
 
 #messages {
     display: none;
     text-align: center;
     font-size: 30px;
+    color: #ffffff; /* right-side big message text white */
 }
 
 #loveu {
@@ -63,12 +65,14 @@ body {
     margin-right: 120px;
     text-align: right;
     display: none;
+    color: #ffffff; /* "I LOVE YOU SO MUCH" text white */
 }
 
 #loveu .signature {
     margin-top: 10px;
     font-size: 20px;
     font-style: italic;
+    color: #ffffff;
 }
 
 /* ==================== CLICK SOUND ==================== */
@@ -81,12 +85,13 @@ body {
     float: left;
     width: 440px;
     height: 400px;
-    color: #333;
+    color: #ffffff; /* main code text white */
     font-family: "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New", sans-serif;
     font-size: 12px;
 }
 
-#code .string { color: #2a36ff; }
+/* keep existing syntax highlight colors */
+#code .string { color: #2a36ff; } /* green/purple highlights stay */
 #code .keyword { color: #7f0055; font-weight: bold; }
 #code .placeholder { margin-left: 15px; }
 #code .space { margin-left: 7px; }
