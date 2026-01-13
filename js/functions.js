@@ -1,5 +1,5 @@
 // ==================== GLOBAL SETTINGS ====================
-var DEV_MODE = false; // set true to skip bloom animation
+var DEV_MODE = false; // set true to skip all animations
 var $window = $(window), gardenCtx, gardenCanvas, $garden, garden;
 var clientWidth = $(window).width();
 var clientHeight = $(window).height();
@@ -23,7 +23,7 @@ $(function () {
     $("#content").css("margin-top", Math.max(($window.height() - $("#content").height()) / 2, 10));
     $("#content").css("margin-left", Math.max(($window.width() - $("#content").width()) / 2, 10));
 
-    // ==================== INITIAL STARS (behind heart) ====================
+    // ==================== INITIAL STARS ====================
     var starCount = 60; // number of twinkling stars
     for (var i = 0; i < starCount; i++) {
         var x = Math.random() * $loveHeart.width();
@@ -33,18 +33,23 @@ $(function () {
 
     // Start animation
     if (DEV_MODE) {
+        // Instantly show full heart
         for (var angle = 10; angle <= 30; angle += 0.2) {
             var point = getHeartPoint(angle, offsetX, offsetY);
             garden.createBloom(point[0], point[1]); // flower bloom
             garden.createStar(point[0], point[1]);  // twinkling star
         }
-        showMessages();
+
+        // Instantly show messages and left text
+        adjustWordsPosition();
+        $('#words').html($('#words').data('full-text')); // see note below
+        $('#messages').show();
+        $('#loveu').show();
     } else {
-        // Delay heart animation so typewriter text starts first
-        var heartDelay = 2500; // 2.5 seconds
-        setTimeout(function() {
-            startHeartAnimation(offsetX, offsetY); // gradual bloom animation
-        }, heartDelay);
+        // Gradually animate heart
+        setTimeout(function () {
+            startHeartAnimation(offsetX, offsetY); // delayed bloom animation
+        }, 1500); // delay so text starts typing first
     }
 
     // render loop for blooms and stars
@@ -72,7 +77,7 @@ function getHeartPoint(angle, offsetX, offsetY) {
 
 // ==================== HEART BLOOM ANIMATION ====================
 function startHeartAnimation(offsetX, offsetY) {
-    var interval = 100; // slowed down for smooth bloom
+    var interval = 100;
     var angle = 10;
     var heart = [];
     var animationTimer = setInterval(function () {
@@ -88,15 +93,15 @@ function startHeartAnimation(offsetX, offsetY) {
         }
         if (draw) {
             heart.push(bloom);
-            garden.createBloom(bloom[0], bloom[1]); // flower bloom
-            garden.createStar(bloom[0], bloom[1]);  // twinkling star
+            garden.createBloom(bloom[0], bloom[1]);
+            garden.createStar(bloom[0], bloom[1]);
         }
 
         if (angle >= 30) {
             clearInterval(animationTimer);
             showMessages();
         } else {
-            angle += 0.15; // slow bloom
+            angle += 0.15; // slower bloom speed
         }
     }, interval);
 }
@@ -134,7 +139,16 @@ Garden.prototype.renderStars = function () {
 (function ($) {
     $.fn.typewriter = function () {
         this.each(function () {
-            var $ele = $(this), str = $ele.html(), progress = 0;
+            var $ele = $(this), str = $ele.html();
+            $ele.data('full-text', str); // store full text for DEV_MODE
+
+            if (DEV_MODE) {
+                // instantly show full text
+                $ele.html(str);
+                return;
+            }
+
+            var progress = 0;
             $ele.html('');
             var timer = setInterval(function () {
                 var current = str.substr(progress, 1);
@@ -188,7 +202,7 @@ function showMessages() {
 
 function adjustWordsPosition() {
     $('#words').css("position", "absolute");
-    $('#words').css("top", $("#garden").position().top + 175); 
+    $('#words').css("top", $("#garden").position().top + 175);
     $('#words').css("left", $("#garden").position().left + 70);
 }
 
