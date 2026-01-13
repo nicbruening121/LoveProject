@@ -157,5 +157,5 @@ function showLoveU() {
 	$('#loveu').fadeIn(3000);
 }
 
-	"var DEV_MODE = true;"
+	"var DEV_MODE = false;"
 }
