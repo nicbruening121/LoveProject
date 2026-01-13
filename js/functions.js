@@ -24,6 +24,14 @@ $(function () {
     $("#content").css("margin-top", Math.max(($window.height() - $("#content").height()) / 2, 10));
     $("#content").css("margin-left", Math.max(($window.width() - $("#content").width()) / 2, 10));
 
+    // ==================== INITIAL STARS ====================
+    var starCount = 60; // number of twinkling stars
+    for (var i = 0; i < starCount; i++) {
+        var x = Math.random() * $loveHeart.width();
+        var y = Math.random() * $loveHeart.height();
+        garden.createStar(x, y);
+    }
+
     // Start animation
     if (DEV_MODE) {
         // Fast-forward: fill heart instantly
@@ -97,7 +105,7 @@ Garden.prototype.createStar = function (x, y) {
         x: x,
         y: y,
         size: 2 + Math.random() * 3,
-        alpha: 0,
+        alpha: Math.random(),
         alphaDir: 0.01 + Math.random() * 0.02
     };
     this.stars.push(star);
@@ -140,7 +148,7 @@ Garden.prototype.renderStars = function () {
 // ==================== ANNIVERSARY TIMER ====================
 function timeElapse() {
     // Start date: Jan 13, 2025 at 5:00 PM
-    var startDate = new Date(2025, 0, 13, 17, 0, 0); 
+    var startDate = new Date(2025, 0, 13, 17, 0, 0);
     var now = new Date();
     var seconds = (now - startDate) / 1000;
 
