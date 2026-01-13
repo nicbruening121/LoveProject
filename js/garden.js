@@ -128,17 +128,18 @@ Garden.prototype = {
             this.blooms[i].draw();
         }
 
-        // Draw stars (twinkling)
+        // Draw stars (twinkle)
         for (var i = 0; i < this.stars.length; i++) {
-            var star = this.stars[i];
-            star.alpha += star.alphaDir;
-            if (star.alpha >= 1 || star.alpha <= 0) star.alphaDir = -star.alphaDir;
-            this.ctx.fillStyle = 'rgba(50, 100, 255,' + star.alpha + ')';
+            var s = this.stars[i];
+            s.alpha += s.alphaDir;
+            if (s.alpha >= 1 || s.alpha <= 0) s.alphaDir = -s.alphaDir;
+            this.ctx.fillStyle = 'rgba(50, 100, 255,' + s.alpha + ')';
             this.ctx.beginPath();
-            this.ctx.arc(star.x, star.y, star.size, 0, 2 * Math.PI);
+            this.ctx.arc(s.x, s.y, s.size, 0, 2 * Math.PI);
             this.ctx.fill();
         }
     },
+
     addBloom: function (b) {
         this.blooms.push(b);
     },
@@ -151,24 +152,22 @@ Garden.prototype = {
         }
     },
     createRandomBloom: function (x, y) {
-        // Heart-shaped bloom
         this.createBloom(
             x,
             y,
             Garden.randomInt(Garden.options.bloomRadius.min, Garden.options.bloomRadius.max),
-            'rgba(50,100,255,0.8)', // blue color
+            'rgba(50,100,255,0.8)',
             Garden.randomInt(Garden.options.petalCount.min, Garden.options.petalCount.max)
         );
     },
     createStar: function (x, y) {
-        var star = {
+        this.stars.push({
             x: x,
             y: y,
             size: 2 + Math.random() * 3,
             alpha: Math.random(),
             alphaDir: 0.01 + Math.random() * 0.02
-        };
-        this.stars.push(star);
+        });
     },
     createBloom: function (x, y, r, c, pc) {
         new Bloom(new Vector(x, y), r, c, pc, this);
